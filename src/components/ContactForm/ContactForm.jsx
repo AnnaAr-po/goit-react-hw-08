@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contactsOps';
+import { addContact } from '../../redux/contacts/operations';
 import { useState } from "react";
 import css from './ContactForm.module.css';
 
@@ -11,7 +11,6 @@ const ContactForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Submitting:", { name, number });
 
         if (!name.trim() || !number.trim()) {
             alert("Будь ласка, введіть ім'я та номер телефону!");

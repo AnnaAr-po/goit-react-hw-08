@@ -1,0 +1,19 @@
+button {
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: block;
+    margin: 0 auto;
+}
+
+button:hover {
+    background-color: #34495e;
+    color: #fff;
+    transform: scale(1.05);
+}
+.contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ecf0f1;
+}

@@ -1,14 +1,15 @@
-import { lazy, useEffect } from "react";
+import { useEffect } from "react";
 import { fetchContacts } from "./redux/contacts/operations";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsRefreshing } from '../redux/auth/selectors';
-
-const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
-const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
-const RegistrationPage = lazy(() => import("./pages/RegistrationPage/RegistrationPage"));
-const ContactPage = lazy(() => import("./pages/ContactPage/ContactPage"));
+import { selectIsRefreshing } from './redux/auth/selectors';
+import HomePage from "./pages/HomePage/HomePage";
+import RegisterPage from "./pages/RegistrationPage/RegistrationPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import ContactsPage from "./pages/ContactsPage/ContactsPage";
+import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
+import {RestrictedRoute} from "./components/RestrictedRoute/RestrictedRoute";
 
 
 const App = () => {
@@ -23,18 +24,36 @@ const App = () => {
   return isRefreshing ? (
     <p>Loading...</p>
   ) : (
-   <Routes>
+    <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="contacts" element={<ContactPage />} />
+        <Route
+          path="register"
+          element={
+            <RestrictedRoute>
+              <RegisterPage />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="login"
+          element={
+            <RestrictedRoute>
+              <LoginPage />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="contacts"
+          element={
+            <PrivateRoute>
+              <ContactsPage />
+            </PrivateRoute>
+          }
+        />
       </Route>
-      {/* <Route path="*" element={<NotFoundPage />} /> */}
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegistrationPage />} />
     </Routes>
   );
 };
-
-
 
 export default App;

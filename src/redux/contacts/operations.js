@@ -9,8 +9,15 @@ export const fetchContacts = createAsyncThunk(
   "contacts/fetchContacts",
   async (_, thunkAPI) => {
     try {
+      const state = thunkAPI.getState();
+      const token = state.auth.token;
+
+      if (!token) {
+        return thunkAPI.rejectWithValue("No token found");
+      }
+
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
       const response = await axios.get("/contacts");
-      console.log("Contacts from API:", response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -18,10 +25,19 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
+// 🔹 Додавання нового контакту
 export const addContact = createAsyncThunk(
   "contacts/addContact",
   async ({ name, number }, thunkAPI) => {
     try {
+      const state = thunkAPI.getState();
+      const token = state.auth.token;
+
+      if (!token) {
+        return thunkAPI.rejectWithValue("No token found");
+      }
+
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
       const response = await axios.post("/contacts", { name, number });
       return response.data;
     } catch (e) {
@@ -30,11 +46,20 @@ export const addContact = createAsyncThunk(
   }
 );
 
+// 🔹 Видалення контакту
 export const deleteContact = createAsyncThunk(
   "contacts/deleteContact",
-  async ( id, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
-     await axios.delete(`/contacts/${id}`);
+      const state = thunkAPI.getState();
+      const token = state.auth.token;
+
+      if (!token) {
+        return thunkAPI.rejectWithValue("No token found");
+      }
+
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      await axios.delete(`/contacts/${id}`);
       return id;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
