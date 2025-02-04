@@ -1,8 +1,5 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-
-axios.defaults.baseURL = "https://6793e40c5eae7e5c4d9036aa.mockapi.io";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { api, setAuthToken } from "../../api";
 
 
 export const fetchContacts = createAsyncThunk(
@@ -16,16 +13,16 @@ export const fetchContacts = createAsyncThunk(
         return thunkAPI.rejectWithValue("No token found");
       }
 
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const response = await axios.get("/contacts");
-      return response.data;
+      setAuthToken(token); 
+      const { data } = await api.get("/contacts");
+      return data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
   }
 );
 
-// 🔹 Додавання нового контакту
+
 export const addContact = createAsyncThunk(
   "contacts/addContact",
   async ({ name, number }, thunkAPI) => {
@@ -37,16 +34,16 @@ export const addContact = createAsyncThunk(
         return thunkAPI.rejectWithValue("No token found");
       }
 
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const response = await axios.post("/contacts", { name, number });
-      return response.data;
+      setAuthToken(token);
+      const { data } = await api.post("/contacts", { name, number });
+      return data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
   }
 );
 
-// 🔹 Видалення контакту
+
 export const deleteContact = createAsyncThunk(
   "contacts/deleteContact",
   async (id, thunkAPI) => {
@@ -58,8 +55,8 @@ export const deleteContact = createAsyncThunk(
         return thunkAPI.rejectWithValue("No token found");
       }
 
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-      await axios.delete(`/contacts/${id}`);
+      setAuthToken(token);
+      await api.delete(`/contacts/${id}`);
       return id;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

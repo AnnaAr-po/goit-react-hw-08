@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { fetchContacts } from "./redux/contacts/operations";
+import { refreshThunk } from "./redux/auth/operations";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +18,7 @@ const App = () => {
 
   
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshThunk());
   }, [dispatch]);
 
   return isRefreshing ? (
