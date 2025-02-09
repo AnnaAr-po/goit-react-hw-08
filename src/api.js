@@ -1,7 +1,11 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://connections-api.goit.global",
+  baseURL: "https://connections-api.goit.global/",
+  headers: {
+    "Content-Type": "application/json",
+     "Accept": "application/json",
+  },
 });
 
 export const setAuthToken = (token) => {

@@ -3,8 +3,10 @@ import { api, setAuthToken, clearAuthToken } from "../../api";
 
 
 export const registerThunk = createAsyncThunk("auth/register", async (credentials, thunkAPI) => {
+  console.log("Registering with:", credentials);
   try {
     const { data } = await api.post("/users/signup", credentials);
+    
     setAuthToken(data.token); 
     return data;
   } catch (error) {

@@ -16,6 +16,7 @@ const RegistrationForm = () => {
     });
 
       const handleSubmit = (values, { resetForm }) => {
+        console.log("Form submitted with values:", values);
     dispatch(registerThunk(values));
     resetForm();
   };

@@ -45,7 +45,7 @@ const App = () => {
         />
         <Route
           path="contacts"
-          element={
+            element={
             <PrivateRoute>
               <ContactsPage />
             </PrivateRoute>
