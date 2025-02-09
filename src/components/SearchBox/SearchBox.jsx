@@ -11,7 +11,7 @@ const SearchBox = () => {
   };
 
   return (
-    <div className={css.searchBox}>
+    <div className={css.form}>
       <label className={css.label}>
         Find contacts by name
         <input
